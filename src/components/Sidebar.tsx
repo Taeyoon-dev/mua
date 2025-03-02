@@ -7,11 +7,18 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ setActiveTab, activeTab }: SidebarProps) => {
+  const handleTabClick = (tab: string) => {
+    setActiveTab(tab); // tab 값을 string으로 전달
+  };
+
   return (
     <SidebarContainer>
-      <NavItem onClick={() => setActiveTab("Drafts")} active={activeTab === "Drafts"}>Drafts</NavItem>
-      <NavItem onClick={() => setActiveTab("Resents")} active={activeTab === "Resents"}>Resents</NavItem>
-      <NavItem onClick={() => setActiveTab("Trash")} active={activeTab === "Trash"}>Trash</NavItem>
+      <NewFileBox>
+        <NewFile onClick={() => handleTabClick("NewFile")}>New File</NewFile>
+      </NewFileBox>
+      <NavItem onClick={() => handleTabClick("Drafts")} active={activeTab === "Drafts"}>Drafts</NavItem>
+      <NavItem onClick={() => handleTabClick("Resents")} active={activeTab === "Resents"}>Resents</NavItem>
+      <NavItem onClick={() => handleTabClick("Trash")} active={activeTab === "Trash"}>Trash</NavItem>
     </SidebarContainer>
   );
 };
@@ -24,6 +31,27 @@ const SidebarContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
+`;
+
+const NewFileBox = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #d4d4d4;
+`;
+
+const NewFile = styled.div`
+  font-size: 18px;
+  font-weight: bolder;
+  color: #d4d4d4;
+  cursor: pointer;
+  padding: 10px 0;
+  text-align: center;
+  width: 100%;
+  &:hover {
+    color: white;
+  }
 `;
 
 const NavItem = styled.button<{ active: boolean }>`

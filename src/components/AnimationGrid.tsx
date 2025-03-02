@@ -70,8 +70,18 @@ const AnimationGrid = ({ activeTab }: AnimationGridProps) => {
     setProjectToDelete(null); // 영구 삭제 프로젝트 상태 초기화
   };
 
+  // 프로젝트를 수정된 시간에 따라 정렬
+  const sortProjectsByDate = (projects: Project[]) => {
+    return projects.sort((a, b) => {
+      const dateA = new Date(a.date); // 날짜를 Date 객체로 변환
+      const dateB = new Date(b.date);
+      return dateB.getTime() - dateA.getTime(); // 최신 날짜가 먼저 오도록 내림차순 정렬
+    });
+  };
+
+  // activeTab에 따라 보여줄 프로젝트 설정
   const projectsToDisplay =
-    activeTab === "Drafts" || activeTab === "Resents" ? projects : trash;
+    activeTab === "Drafts" || activeTab === "Resents" ? sortProjectsByDate(projects) : sortProjectsByDate(trash);
 
   return (
     <div>
